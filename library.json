@@ -1,0 +1,20 @@
+{
+  "name": "LoRa Basics Modem HAL for WM1110",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SeeedJP/LBM_WM1110.git"
+  },
+  "authors": {
+    "name": "MATSUOKA Takashi",
+    "email": "matsujirushi@live.jp"
+  },
+  "license": "MIT",
+  "frameworks": "arduino",
+  "platforms": "nordicnrf52",
+  "build": {
+    "flags": [
+      "-Isrc"
+    ]
+  }
+}
