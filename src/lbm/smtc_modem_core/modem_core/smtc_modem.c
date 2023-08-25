@@ -1356,6 +1356,26 @@ smtc_modem_return_code_t smtc_modem_multicast_class_b_stop_all_sessions( uint8_t
 #endif  // SMTC_MULTICAST
 }
 
+smtc_modem_return_code_t smtc_modem_set_region_duty_cycle( bool status )
+{
+    smtc_modem_return_code_t return_code = SMTC_MODEM_RC_OK;
+    modem_set_duty_cycle_disabled_by_host(true);
+    
+    if( lorawan_api_duty_cycle_enable_set( ( status == false ) ? SMTC_DTC_FULL_DISABLED : SMTC_DTC_ENABLED ) == false )
+    {
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call with set duty cycle not valid\n", __func__ );
+        return SMTC_MODEM_RC_INVALID;
+    }
+
+    return return_code;
+}
+
+smtc_modem_return_code_t smtc_modem_get_duty_cycle_enable( uint8_t *duty_cycle_enable )
+{
+    *duty_cycle_enable = lorawan_api_duty_cycle_enable_get();
+    return SMTC_MODEM_RC_OK;
+}
+
 smtc_modem_return_code_t smtc_modem_get_region( uint8_t stack_id, smtc_modem_region_t* region )
 {
     UNUSED( stack_id );
@@ -2164,6 +2184,14 @@ smtc_modem_return_code_t smtc_modem_get_duty_cycle_status( int32_t* duty_cycle_s
     RETURN_INVALID_IF_NULL( duty_cycle_status_ms );
 
     *duty_cycle_status_ms = -1 * lorawan_api_next_free_duty_cycle_ms_get( );
+    return SMTC_MODEM_RC_OK;
+}
+
+smtc_modem_return_code_t smtc_modem_get_toa_status( uint32_t* toa_status_ms,uint8_t len )
+{
+    RETURN_BUSY_IF_TEST_MODE( );
+
+    * toa_status_ms = lorawan_api_get_toa( len );
     return SMTC_MODEM_RC_OK;
 }
 

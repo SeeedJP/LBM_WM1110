@@ -1130,6 +1130,32 @@ smtc_modem_return_code_t smtc_modem_multicast_class_b_stop_session( uint8_t     
 smtc_modem_return_code_t smtc_modem_multicast_class_b_stop_all_sessions( uint8_t stack_id );
 
 /**
+ * @brief Set the dutycycle enable or disable
+ *
+ * @param [in]  status  
+ *
+ * @return Modem return code as defined in @ref smtc_modem_return_code_t
+ * @retval SMTC_MODEM_RC_OK                Command executed without errors
+ * @retval SMTC_MODEM_RC_INVALID           \p status is NULL
+ * @retval SMTC_MODEM_RC_BUSY              Modem is currently in test mode
+ * @retval SMTC_MODEM_RC_INVALID_STACK_ID  Invalid \p stack_id
+ */
+smtc_modem_return_code_t smtc_modem_set_region_duty_cycle( bool status );
+
+/**
+ * @brief Get the dutycycle enable or disable
+ *
+ * @param [in]  *duty_cycle_enable dutycycle
+ *
+ * @return Modem return code as defined in @ref smtc_modem_return_code_t
+ * @retval SMTC_MODEM_RC_OK                Command executed without errors
+ * @retval SMTC_MODEM_RC_INVALID           \p duty_cycle_enable is NULL
+ * @retval SMTC_MODEM_RC_BUSY              Modem is currently in test mode
+ * @retval SMTC_MODEM_RC_INVALID_STACK_ID  Invalid \p stack_id
+ */
+smtc_modem_return_code_t smtc_modem_get_duty_cycle_enable( uint8_t *duty_cycle_enable );
+
+/**
  * @brief Get the current LoRaWAN region
  *
  * @param [in]  stack_id Stack identifier
@@ -1665,6 +1691,21 @@ smtc_modem_return_code_t smtc_modem_lorawan_get_lost_connection_counter( uint8_t
  * @retval SMTC_MODEM_RC_BUSY          Modem is currently in test mode
  */
 smtc_modem_return_code_t smtc_modem_get_duty_cycle_status( int32_t* duty_cycle_status_ms );
+
+/**
+ * @brief Get the current toa status
+ *
+ * @remark If the returned value is positive, it is the time still available. A negative value indicates the time to
+ * wait until band availability
+ *
+ * @param [out] toa_status_ms Status of the toa in milliseconds
+ *
+ * @return Modem return code as defined in @ref smtc_modem_return_code_t
+ * @retval SMTC_MODEM_RC_OK            Command executed without errors
+ * @retval SMTC_MODEM_RC_INVALID       Parameter \p toa_status_ms is NULL
+ * @retval SMTC_MODEM_RC_BUSY          Modem is currently in test mode
+ */
+smtc_modem_return_code_t smtc_modem_get_toa_status( uint32_t* toa_status_ms, uint8_t len );
 
 /**
  * @brief Get the current state of the stack
