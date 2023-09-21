@@ -453,7 +453,7 @@ void region_us_915_init_after_join_snapshot_channel_mask( smtc_real_t* real, uin
     }
 
     uint8_t            tx_sf;
-    lr1mac_bandwidth_t tx_bw;
+    lr1mac_bandwidth_t tx_bw = BW_RFU;
     region_us_915_lora_dr_to_sf_bw( tx_data_rate, &tx_sf, &tx_bw );
 
     /**
