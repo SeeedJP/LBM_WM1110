@@ -108,7 +108,7 @@ void smtc_modem_hal_enable_modem_irq( void )
 
 void smtc_modem_hal_context_restore( const modem_context_type_t ctx_type, uint8_t* buffer, const uint32_t size )
 {
-    if (ctx_type < 0 || std::extent<decltype(FlashLbmConextPages)>::value <= ctx_type) abort();
+    if (std::extent<decltype(FlashLbmConextPages)>::value <= ctx_type) abort();
     if (buffer == nullptr) abort();
     if (size <= 0 || Wm1110Hardware::getInstance().flash.PAGE_SIZE < size) abort();
 
@@ -119,7 +119,7 @@ void smtc_modem_hal_context_restore( const modem_context_type_t ctx_type, uint8_
 
 void smtc_modem_hal_context_store( const modem_context_type_t ctx_type, const uint8_t* buffer, const uint32_t size )
 {
-    if (ctx_type < 0 || std::extent<decltype(FlashLbmConextPages)>::value <= ctx_type) abort();
+    if (std::extent<decltype(FlashLbmConextPages)>::value <= ctx_type) abort();
     if (buffer == nullptr) abort();
     if (size <= 0 || Wm1110Hardware::getInstance().flash.PAGE_SIZE < size) abort();
 

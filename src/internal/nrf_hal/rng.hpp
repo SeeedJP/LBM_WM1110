@@ -34,7 +34,7 @@ private:
 private:
     static void rngIsr(uint8_t rng_data)
     {
-        if (rngValueCount_ < 0 || sizeof(rngValue_) <= rngValueCount_) abort();
+        if (sizeof(rngValue_) <= rngValueCount_) abort();
 
         rngValue_[rngValueCount_] = rng_data;
         ++rngValueCount_;
