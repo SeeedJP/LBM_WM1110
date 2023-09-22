@@ -249,7 +249,7 @@ void smtc_modem_hal_stop_radio_tcxo( void )
 
 uint32_t smtc_modem_hal_get_radio_tcxo_startup_delay_ms( void )
 {
-    return 5;
+    return 30;
 }
 
 /* ------------ Environment management ------------*/
