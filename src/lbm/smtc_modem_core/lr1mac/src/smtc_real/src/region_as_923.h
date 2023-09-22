@@ -71,7 +71,7 @@ extern "C" {
  * --- PUBLIC FUNCTIONS PROTOTYPES ---------------------------------------------
  */
 
-void region_as_923_init( smtc_real_t* real, uint8_t group_id );
+void region_as_923_init( smtc_real_t* real, uint8_t group_id, uint8_t freq_id );
 
 /**
  * \brief

@@ -142,6 +142,11 @@ static const uint8_t SYNC_WORD_GFSK_AS_923[] = { 0xC1, 0x94, 0xC1 };
  * Default frequencies at boot
  */
 static const uint32_t default_freq_as_923[] = { 923200000, 923400000 };
+static const uint32_t default_freq_as_923_helium_1[] = { 923200000, 923400000 };
+static const uint32_t default_freq_as_923_helium_2[] = { 921400000, 921600000 };
+static const uint32_t default_freq_as_923_helium_3[] = { 916600000, 916800000 };
+static const uint32_t default_freq_as_923_helium_4[] = { 917300000, 917500000 };
+static const uint32_t default_freq_as_923_helium_1b[] = { 922000000, 922200000 };
 
 /**
  * Up/Down link data rates offset definition when no dwell time limitation

@@ -270,8 +270,12 @@ typedef enum smtc_modem_region_e
     SMTC_MODEM_REGION_RU_864        = 11,
     SMTC_MODEM_REGION_CN_470_RP_1_0 = 12,
     SMTC_MODEM_REGION_AS_923_GRP4   = 13,
+    SMTC_MODEM_REGION_AS_923_HELIUM_1   = 14,
+    SMTC_MODEM_REGION_AS_923_HELIUM_2   = 15,
+    SMTC_MODEM_REGION_AS_923_HELIUM_3   = 16,
+    SMTC_MODEM_REGION_AS_923_HELIUM_4   = 17,
+    SMTC_MODEM_REGION_AS_923_HELIUM_1B  = 18,
 } smtc_modem_region_t;
-
 /**
  * @brief Multicast group identifier
  */

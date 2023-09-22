@@ -100,6 +100,21 @@ static const char* smtc_real_region_list_str[] = {
     [SMTC_REAL_REGION_AS_923_GRP4] = "AS923_GRP4",
 #endif
 #endif
+#if defined( REGION_AS_923 )
+    [SMTC_REAL_REGION_AS_923_HELIUM_1] = "AS923_HELIUM_1",
+#endif
+#if defined( REGION_AS_923 )
+    [SMTC_REAL_REGION_AS_923_HELIUM_2] = "AS923_HELIUM_2",
+#endif
+#if defined( REGION_AS_923 )
+    [SMTC_REAL_REGION_AS_923_HELIUM_3] = "AS923_HELIUM_3",
+#endif
+#if defined( REGION_AS_923 )
+    [SMTC_REAL_REGION_AS_923_HELIUM_4] = "AS923_HELIUM_4",
+#endif
+#if defined( REGION_AS_923 )
+    [SMTC_REAL_REGION_AS_923_HELIUM_1B] = "AS923_HELIUM_1B",
+#endif
 };
 
 #endif
