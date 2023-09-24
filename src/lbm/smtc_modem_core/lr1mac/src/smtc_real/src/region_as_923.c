@@ -73,7 +73,7 @@
  * -----------------------------------------------------------------------------
  * --- PRIVATE VARIABLES -------------------------------------------------------
  */
-
+static uint8_t default_freq_group_id = 0;
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE FUNCTIONS DECLARATION -------------------------------------------
@@ -83,7 +83,7 @@
  * -----------------------------------------------------------------------------
  * --- PUBLIC FUNCTIONS DEFINITION ---------------------------------------------
  */
-void region_as_923_init( smtc_real_t* real, uint8_t group_id )
+void region_as_923_init( smtc_real_t* real, uint8_t group_id, uint8_t freq_id )
 {
     real_const.const_number_of_tx_channel      = NUMBER_OF_CHANNEL_AS_923;
     real_const.const_number_of_rx_channel      = NUMBER_OF_CHANNEL_AS_923;
@@ -100,6 +100,7 @@ void region_as_923_init( smtc_real_t* real, uint8_t group_id )
     real_const.const_ack_timeout               = ACK_TIMEOUT_AS_923;
     real_const.const_frequency_factor          = FREQUENCY_FACTOR_AS_923;
 
+    default_freq_group_id = freq_id;
     switch( group_id )
     {
     case 1:  // AS923 groupe 1
@@ -188,8 +189,41 @@ void region_as_923_config( smtc_real_t* real )
     // Set Tx/Rx default Freq and enable channels
     for( uint8_t i = 0; i < real_const.const_number_of_boot_tx_channel; i++ )
     {
-        tx_frequency_channel[i]  = default_freq_as_923[i] + real_const.const_frequency_offset_hz;
-        rx1_frequency_channel[i] = default_freq_as_923[i] + real_const.const_frequency_offset_hz;
+        switch( default_freq_group_id )
+        {
+            case 0:
+                tx_frequency_channel[i]  = default_freq_as_923[i] + real_const.const_frequency_offset_hz;;
+                rx1_frequency_channel[i] = default_freq_as_923[i] + real_const.const_frequency_offset_hz;;
+            break;
+
+            case 1:
+                tx_frequency_channel[i]  = default_freq_as_923_helium_1[i] + real_const.const_frequency_offset_hz;;
+                rx1_frequency_channel[i] = default_freq_as_923_helium_1[i] + real_const.const_frequency_offset_hz;;
+            break;
+
+            case 2:
+                tx_frequency_channel[i]  = default_freq_as_923_helium_2[i] + real_const.const_frequency_offset_hz;;
+                rx1_frequency_channel[i] = default_freq_as_923_helium_2[i] + real_const.const_frequency_offset_hz;;
+            break;
+
+            case 3:
+                tx_frequency_channel[i]  = default_freq_as_923_helium_3[i] + real_const.const_frequency_offset_hz;;
+                rx1_frequency_channel[i] = default_freq_as_923_helium_3[i] + real_const.const_frequency_offset_hz;;
+            break;
+
+            case 4:
+                tx_frequency_channel[i]  = default_freq_as_923_helium_4[i] + real_const.const_frequency_offset_hz;;
+                rx1_frequency_channel[i] = default_freq_as_923_helium_4[i] + real_const.const_frequency_offset_hz;;
+            break;
+
+            case 5:
+                tx_frequency_channel[i]  = default_freq_as_923_helium_1b[i] + real_const.const_frequency_offset_hz;;
+                rx1_frequency_channel[i] = default_freq_as_923_helium_1b[i] + real_const.const_frequency_offset_hz;;
+            break;
+
+            default:
+            break;            
+        }
         SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
     }
 

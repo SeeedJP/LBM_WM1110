@@ -139,23 +139,43 @@ void smtc_real_init( smtc_real_t* real, smtc_real_region_types_t region_type )
 #endif
 #if defined( REGION_AS_923 )
     case SMTC_REAL_REGION_AS_923: {
-        region_as_923_init( real, 1 );
+        region_as_923_init( real, 1, 0 );
         break;
     }
     case SMTC_REAL_REGION_AS_923_GRP2: {
-        region_as_923_init( real, 2 );
+        region_as_923_init( real, 2, 0 );
         break;
     }
     case SMTC_REAL_REGION_AS_923_GRP3: {
-        region_as_923_init( real, 3 );
+        region_as_923_init( real, 3, 0 );
         break;
     }
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4: {
-        region_as_923_init( real, 4 );
+        region_as_923_init( real, 4, 0 );
         break;
     }
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1: {
+        region_as_923_init( real, 1, 1 );
+        break;
+    }
+    case SMTC_REAL_REGION_AS_923_HELIUM_2: {
+        region_as_923_init( real, 1, 2 );
+        break;
+    }
+    case SMTC_REAL_REGION_AS_923_HELIUM_3: {
+        region_as_923_init( real, 1, 3 );
+        break;
+    }
+    case SMTC_REAL_REGION_AS_923_HELIUM_4: {
+        region_as_923_init( real, 1, 4 );
+        break;
+    }
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B: {
+        region_as_923_init( real, 1, 5 );
+        break;
+    }
 #endif
 #if defined( REGION_US_915 )
     case SMTC_REAL_REGION_US_915: {
@@ -230,11 +250,18 @@ void smtc_real_config( smtc_real_t* real )
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
     {
         region_as_923_config( real );
         break;
     }
+
 #endif
+
 #if defined( REGION_US_915 )
     case SMTC_REAL_REGION_US_915: {
         region_us_915_config( real );
@@ -303,6 +330,11 @@ void smtc_real_config_session( smtc_real_t* real )
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_US_915 )
     case SMTC_REAL_REGION_US_915:
@@ -587,6 +619,11 @@ uint8_t smtc_real_get_number_of_chmask_in_cflist( smtc_real_t* real )
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
@@ -653,6 +690,11 @@ status_lorawan_t smtc_real_get_next_channel( smtc_real_t* real, smtc_dtc_t* dtc_
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
     {
         return region_as_923_get_next_channel( real, tx_data_rate, out_tx_frequency, out_rx1_frequency );
     }
@@ -722,10 +764,16 @@ status_lorawan_t smtc_real_get_join_next_channel( smtc_real_t* real, smtc_dtc_t*
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
     {
         return region_as_923_get_join_next_channel( real, *tx_data_rate, out_tx_frequency, out_rx1_frequency );
     }
 #endif
+
 #if defined( REGION_US_915 )
     case SMTC_REAL_REGION_US_915: {
         return region_us_915_get_join_next_channel( real, tx_data_rate, out_tx_frequency, out_rx1_frequency );
@@ -821,6 +869,11 @@ void smtc_real_set_channel_mask( smtc_real_t* real )
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_CN_470 )
     case SMTC_REAL_REGION_CN_470:
@@ -893,6 +946,11 @@ void smtc_real_init_join_snapshot_channel_mask( smtc_real_t* real )
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_CN_470 )
     case SMTC_REAL_REGION_CN_470:
@@ -952,6 +1010,11 @@ void smtc_real_init_after_join_snapshot_channel_mask( smtc_real_t* real, uint8_t
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_CN_470 )
     case SMTC_REAL_REGION_CN_470:
@@ -1015,10 +1078,16 @@ status_channel_t smtc_real_build_channel_mask( smtc_real_t* real, uint8_t ch_mas
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
     {
         return region_as_923_build_channel_mask( real, ch_mask_cntl, ch_mask );
     }
 #endif
+
 #if defined( REGION_US_915 )
     case SMTC_REAL_REGION_US_915: {
         return region_us_915_build_channel_mask( real, ch_mask_cntl, ch_mask );
@@ -1139,6 +1208,11 @@ void smtc_real_enable_all_channels_with_valid_freq( smtc_real_t* real )
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_KR_920 )
     case SMTC_REAL_REGION_KR_920:
@@ -1250,7 +1324,13 @@ status_lorawan_t smtc_real_is_tx_dr_acceptable( smtc_real_t* real, uint8_t dr, b
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
+
 #if defined( REGION_CN_470 )
     case SMTC_REAL_REGION_CN_470:
 #endif
@@ -1329,7 +1409,13 @@ status_lorawan_t smtc_real_is_nwk_received_tx_frequency_valid( smtc_real_t* real
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
+
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
 #endif
@@ -1392,6 +1478,11 @@ status_lorawan_t smtc_real_is_channel_index_valid( smtc_real_t* real, uint8_t ch
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
@@ -1487,7 +1578,13 @@ void smtc_real_set_tx_frequency_channel( smtc_real_t* real, uint32_t tx_freq, ui
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
+
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
 #endif
@@ -1550,6 +1647,11 @@ status_lorawan_t smtc_real_set_rx1_frequency_channel( smtc_real_t* real, uint32_
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
@@ -1616,6 +1718,11 @@ void smtc_real_set_channel_dr( smtc_real_t* real, uint8_t channel_index, uint8_t
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
@@ -1684,6 +1791,11 @@ void smtc_real_set_channel_enabled( smtc_real_t* real, uint8_t enable, uint8_t c
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
@@ -1747,6 +1859,11 @@ uint32_t smtc_real_get_tx_channel_frequency( smtc_real_t* real, uint8_t channel_
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
@@ -1814,6 +1931,11 @@ uint32_t smtc_real_get_rx1_channel_frequency( smtc_real_t* real, uint8_t channel
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
@@ -2043,6 +2165,11 @@ modulation_type_t smtc_real_get_modulation_type_from_datarate( smtc_real_t* real
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
     {
         return region_as_923_get_modulation_type_from_datarate( datarate );
         break;
@@ -2119,6 +2246,11 @@ void smtc_real_lora_dr_to_sf_bw( smtc_real_t* real, uint8_t in_dr, uint8_t* out_
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
     {
         region_as_923_lora_dr_to_sf_bw( in_dr, out_sf, out_bw );
         break;
@@ -2189,6 +2321,11 @@ void smtc_real_fsk_dr_to_bitrate( smtc_real_t* real, uint8_t in_dr, uint8_t* out
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
     {
         region_as_923_fsk_dr_to_bitrate( in_dr, out_bitrate );
         break;
@@ -2325,7 +2462,13 @@ int8_t smtc_real_clamp_output_power_eirp_vs_freq_and_dr( smtc_real_t* real, int8
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
+
 #if defined( REGION_AU_915 )
     case SMTC_REAL_REGION_AU_915:
 #endif
@@ -2573,7 +2716,13 @@ bool smtc_real_is_beacon_hopping( smtc_real_t* real )
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
+
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
 #endif
@@ -2633,6 +2782,11 @@ uint32_t smtc_real_get_beacon_frequency( smtc_real_t* real, uint32_t gps_time_s 
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:
@@ -2699,6 +2853,11 @@ uint32_t smtc_real_get_ping_slot_frequency( smtc_real_t* real, uint32_t gps_time
 #if defined( RP2_103 )
     case SMTC_REAL_REGION_AS_923_GRP4:
 #endif
+    case SMTC_REAL_REGION_AS_923_HELIUM_1:
+    case SMTC_REAL_REGION_AS_923_HELIUM_2:
+    case SMTC_REAL_REGION_AS_923_HELIUM_3:
+    case SMTC_REAL_REGION_AS_923_HELIUM_4:
+    case SMTC_REAL_REGION_AS_923_HELIUM_1B:
 #endif
 #if defined( REGION_IN_865 )
     case SMTC_REAL_REGION_IN_865:

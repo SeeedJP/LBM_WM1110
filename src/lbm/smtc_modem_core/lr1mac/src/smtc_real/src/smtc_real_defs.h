@@ -148,6 +148,21 @@ typedef enum smtc_real_region_types_e
     SMTC_REAL_REGION_AS_923_GRP4 = 13,
 #endif
 #endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_1 = 14,
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_2 = 15,
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_3 = 16,
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_4 = 17,
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_1B = 18,
+#endif
 } smtc_real_region_types_t;
 
 /**
@@ -207,6 +222,21 @@ static const uint8_t smtc_real_region_list[] = {
 #if defined( REGION_AS_923 )
     SMTC_REAL_REGION_AS_923_GRP4,
 #endif
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_1,
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_2,
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_3,
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_4,
+#endif
+#if defined( REGION_AS_923 )
+    SMTC_REAL_REGION_AS_923_HELIUM_1B,
 #endif
 };
 
@@ -292,6 +322,8 @@ typedef struct smtc_real_const_s
     uint32_t        const_ping_slot_frequency;
     bool            const_uplink_dwell_time;
 } smtc_real_const_t;
+
+
 
 typedef struct smtc_real_s
 {
