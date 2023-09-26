@@ -1254,7 +1254,12 @@ static void load_devnonce_reset( lr1_stack_mac_t* lr1_mac_obj )
     }
     else
     {
-        SMTC_MODEM_HAL_TRACE_WARNING( "No valid DevNonce in NVM, use default (0)\n" );
+        // SMTC_MODEM_HAL_TRACE_WARNING( "No valid DevNonce in NVM, use default (0)\n" );
+        SMTC_MODEM_HAL_TRACE_WARNING( "No valid DevNonce in NVM, use random value\n" );
+
+        uint32_t num = smtc_modem_hal_get_random_nb_in_range( 0, 0x7fff );
+        lr1_mac_obj->dev_nonce   = num;
+        lr1_mac_obj->nb_of_reset = 0;
     }
 }
 
