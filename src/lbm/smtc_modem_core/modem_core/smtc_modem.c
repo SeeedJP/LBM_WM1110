@@ -1361,7 +1361,6 @@ smtc_modem_return_code_t smtc_modem_set_region_sub_band( uint8_t stack_id, uint8
     UNUSED( stack_id );
     RETURN_BUSY_IF_TEST_MODE( );
 
-    smtc_modem_return_code_t return_code = SMTC_MODEM_RC_OK;
     if( get_join_state( ) != MODEM_NOT_JOINED )
     {
         SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\n", __func__ );
@@ -1374,7 +1373,7 @@ smtc_modem_return_code_t smtc_modem_set_region_sub_band( uint8_t stack_id, uint8
         return SMTC_MODEM_RC_INVALID;
     }
 
-    return return_code;
+    return SMTC_MODEM_RC_OK;
 }
 
 

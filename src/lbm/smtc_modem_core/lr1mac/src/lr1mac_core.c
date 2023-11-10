@@ -1073,8 +1073,7 @@ status_lorawan_t lr1_mac_core_get_device_time_req_status( lr1_stack_mac_t* lr1_m
 
 status_lorawan_t lr1mac_core_set_region_sub_band( lr1_stack_mac_t* lr1_mac_obj, uint8_t band )
 {
-    smtc_real_set_region_sub_band( lr1_mac_obj->real, band );
-    return OKLORAWAN;
+    return smtc_real_set_region_sub_band( lr1_mac_obj->real, band );
 }
 
 status_lorawan_t lr1_mac_core_get_ping_slot_info_req_status( lr1_stack_mac_t* lr1_mac_obj )

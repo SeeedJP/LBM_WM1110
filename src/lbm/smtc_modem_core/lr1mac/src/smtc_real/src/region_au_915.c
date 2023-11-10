@@ -66,7 +66,7 @@
  * -----------------------------------------------------------------------------
  * --- PRIVATE CONSTANTS -------------------------------------------------------
  */
-static uint8_t region_sub_band = 2; // from 1 to 8, default is 1.
+static uint8_t region_sub_band = 2; // from 1 to 8, default is 2.
 static bool region_channel_update = false;
 /*
  * -----------------------------------------------------------------------------
