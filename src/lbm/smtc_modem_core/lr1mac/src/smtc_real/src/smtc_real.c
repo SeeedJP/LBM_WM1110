@@ -2961,19 +2961,18 @@ lr1mac_version_t smtc_real_get_regional_parameters_version( void )
 
 status_lorawan_t smtc_real_set_region_sub_band( smtc_real_t* real, uint8_t band )
 {
-    if( band > 0 && band <= 8 )
-    {
+    status_lorawan_t status;
+    (void)status;
+
 #if defined( REGION_US_915 )    
-        region_us_915_set_sub_band( real, band );
-#endif    
-    
-#if defined( REGION_AU_915 )
-        region_au_915_set_sub_band( real, band );
+    if ((status = region_us_915_set_sub_band( real, band )) != OKLORAWAN) return status;
 #endif
-        return OKLORAWAN;
-    }
-    
-    return ERRORLORAWAN;
+
+#if defined( REGION_AU_915 )
+    if ((status = region_au_915_set_sub_band( real, band )) != OKLORAWAN) return status;
+#endif
+
+    return OKLORAWAN;
 }
 
 uint32_t smtc_real_get_symbol_duration_us( smtc_real_t* real, uint8_t datarate )
