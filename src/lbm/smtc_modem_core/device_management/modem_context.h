@@ -1132,6 +1132,12 @@ const void* modem_context_get_modem_radio_ctx( void );
 void modem_context_set_modem_radio_ctx( const void* radio_ctx );
 
 /**
+ * @brief set the modem region sub band
+ *
+ * @param band sub-band
+ */
+bool set_modem_region_sub_band( uint8_t band );
+/**
  * @brief Set D2D metadata in modem context
  *
  * @param mc_grp_id

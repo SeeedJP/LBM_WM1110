@@ -731,6 +731,13 @@ lr1mac_version_t smtc_real_get_regional_parameters_version( void );
 /**
  * @brief
  *
+ * @param band
+ */
+status_lorawan_t smtc_real_set_region_sub_band( smtc_real_t* real, uint8_t band );
+
+/**
+ * @brief
+ *
  * @param
  * @return
  */

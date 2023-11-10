@@ -2052,6 +2052,14 @@ void modem_context_set_modem_radio_ctx( const void* radio_ctx )
     modem_radio_ctx = radio_ctx;
 }
 
+bool set_modem_region_sub_band( uint8_t band )
+{
+    if( lorawan_api_set_region_sub_band( band ) != OKLORAWAN )
+    {
+        return false;
+    }
+    return true;
+}
 #if defined( SMTC_D2D )
 void modem_context_set_class_b_d2d_last_metadata( uint8_t mc_grp_id, bool tx_done, uint8_t nb_trans_not_send )
 {

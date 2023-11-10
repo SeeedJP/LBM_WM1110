@@ -2959,6 +2959,23 @@ lr1mac_version_t smtc_real_get_regional_parameters_version( void )
     return version;
 }
 
+status_lorawan_t smtc_real_set_region_sub_band( smtc_real_t* real, uint8_t band )
+{
+    if( band > 0 && band <= 8 )
+    {
+#if defined( REGION_US_915 )    
+        region_us_915_set_sub_band( real, band );
+#endif    
+    
+#if defined( REGION_AU_915 )
+        region_au_915_set_sub_band( real, band );
+#endif
+        return OKLORAWAN;
+    }
+    
+    return ERRORLORAWAN;
+}
+
 uint32_t smtc_real_get_symbol_duration_us( smtc_real_t* real, uint8_t datarate )
 {
     modulation_type_t modulation_type = smtc_real_get_modulation_type_from_datarate( real, datarate );

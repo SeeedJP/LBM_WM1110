@@ -66,7 +66,8 @@
  * -----------------------------------------------------------------------------
  * --- PRIVATE CONSTANTS -------------------------------------------------------
  */
-
+static uint8_t region_sub_band = 2; // from 1 to 8, default is 1.
+static bool region_channel_update = false;
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE TYPES -----------------------------------------------------------
@@ -168,10 +169,18 @@ void region_au_915_config( smtc_real_t* real )
     // Tx 125 kHz channels
     for( uint8_t i = 0; i < NUMBER_OF_TX_CHANNEL_AU_915 - 8; i++ )
     {
-        SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
-
         // Enable default datarate
         dr_bitfield_tx_channel[i] = DEFAULT_TX_DR_125_BIT_FIELD_AU_915;
+
+        if( i >= (( region_sub_band - 1 ) * 8 ) && i < ( region_sub_band * 8 ))
+        {
+            SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
+        }
+        else
+        {
+            SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_DISABLED );
+            continue;
+        }
 
         SMTC_MODEM_HAL_TRACE_PRINTF( "TX - idx:%u, freq: %d, dr: 0x%x,\n%s", i,
                                      region_au_915_get_tx_frequency_channel( real, i ), dr_bitfield_tx_channel[i],
@@ -180,14 +189,32 @@ void region_au_915_config( smtc_real_t* real )
     // Tx 500 kHz channels
     for( uint8_t i = NUMBER_OF_TX_CHANNEL_AU_915 - 8; i < NUMBER_OF_TX_CHANNEL_AU_915; i++ )
     {
-        SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
         // Enable default datarate
         dr_bitfield_tx_channel[i] = DEFAULT_TX_DR_500_BIT_FIELD_AU_915;
+
+        if( i == (( region_sub_band - 1 ) + 64 ))
+        {  
+            SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
+        }
+        else
+        {
+            SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_DISABLED );
+            continue;
+        }
 
         SMTC_MODEM_HAL_TRACE_PRINTF( "TX - idx:%u, freq: %d, dr: 0x%x,\n%s", i,
                                      region_au_915_get_tx_frequency_channel( real, i ), dr_bitfield_tx_channel[i],
                                      ( ( i % 8 ) == 7 ) ? "---\n" : "" );
     }
+
+    // Enable select channels
+    memset1( &unwrapped_channel_mask[0], 0x00, 8 );
+    memset1( &unwrapped_channel_mask[region_sub_band - 1], 0xFF, 1 );
+    memset1( &unwrapped_channel_mask[BANK_8_500_AU915], ( 0x01 << ( region_sub_band - 1 )), 1 );
+    memset1( &snapshot_channel_tx_mask[0], 0x00, 8 );
+    memset1( &snapshot_channel_tx_mask[region_sub_band - 1], 0xFF, 1 );
+    memset1( &snapshot_channel_tx_mask[BANK_8_500_AU915], ( 0x01 << ( region_sub_band - 1 )), 1 );
+
 #if MODEM_HAL_DBG_TRACE == MODEM_HAL_FEATURE_ON
     // Rx 500 kHz channels
     for( uint8_t i = 0; i < NUMBER_OF_RX_CHANNEL_AU_915; i++ )
@@ -582,6 +609,8 @@ status_channel_t region_au_915_build_channel_mask( smtc_real_t* real, uint8_t ch
         status = ERROR_CHANNEL_CNTL;
         break;
     }
+    
+    if( channel_mask_cntl <= 7 ) region_channel_update = true;
 
     // Check if all enabled channels has a valid frequency
     for( uint8_t i = 0; i < real_const.const_number_of_tx_channel; i++ )
@@ -618,13 +647,29 @@ void region_au_915_enable_all_channels_with_valid_freq( smtc_real_t* real )
     // Tx 125 kHz channels
     for( uint8_t i = 0; i < NUMBER_OF_TX_CHANNEL_AU_915 - 8; i++ )
     {
-        SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
+        if( i >= (( region_sub_band - 1 ) * 8 ) && i < ( region_sub_band * 8 ))
+        {
+            SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
+        }
+        else
+        {
+            SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_DISABLED );
+        }
+
         dr_bitfield_tx_channel[i] = DEFAULT_TX_DR_125_BIT_FIELD_AU_915;
     }
     // Tx 500 kHz channels
     for( uint8_t i = NUMBER_OF_TX_CHANNEL_AU_915 - 8; i < NUMBER_OF_TX_CHANNEL_AU_915; i++ )
     {
-        SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
+        if( i == (( region_sub_band - 1 ) + 64 ))
+        {  
+            SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
+        }
+        else
+        {
+            SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_DISABLED );
+        }
+
         dr_bitfield_tx_channel[i] = DEFAULT_TX_DR_500_BIT_FIELD_AU_915;
     }
 }
@@ -705,6 +750,21 @@ uint32_t region_au_915_get_rx_ping_slot_frequency_channel( smtc_real_t* real, ui
     return ( PING_SLOT_FREQ_START_AU_915 + ( index * PING_SLOT_STEP_AU_915 ) );
 }
 
+status_lorawan_t region_au_915_set_sub_band( smtc_real_t* real, uint8_t band )
+{
+    if( band > 0 && band <= 8 )
+    {
+        region_sub_band = band;
+        SMTC_MODEM_HAL_TRACE_PRINTF( "region_au_915_set_sub_band: %d\n", region_sub_band );        
+        return OKLORAWAN;
+    }
+    else
+    {
+        return ERRORLORAWAN;
+    }
+}
+
+
 /*
  * -----------------------------------------------------------------------------
  * --- PRIVATE FUNCTIONS DEFINITION --------------------------------------------
@@ -712,8 +772,42 @@ uint32_t region_au_915_get_rx_ping_slot_frequency_channel( smtc_real_t* real, ui
 static void region_au_915_channel_mask_set_after_join( smtc_real_t* real )
 {
     // Copy all unwrapped channels in channel enable and in snapshot
-    memcpy1( channel_index_enabled, unwrapped_channel_mask, BANK_MAX_AU915 );
-    memcpy1( snapshot_channel_tx_mask, unwrapped_channel_mask, BANK_MAX_AU915 );
+    if( region_channel_update )
+    {
+        memcpy1( channel_index_enabled, unwrapped_channel_mask, BANK_MAX_AU915 );
+        memcpy1( snapshot_channel_tx_mask, unwrapped_channel_mask, BANK_MAX_AU915 );
+    }
+    else
+    {
+        // Tx 125 kHz channels
+        for( uint8_t i = 0; i < NUMBER_OF_TX_CHANNEL_AU_915 - 8; i++ )
+        {
+            if( i >= (( region_sub_band - 1 ) * 8 ) && i < ( region_sub_band * 8 ))
+            {
+                SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
+            }
+            else
+            {
+                SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_DISABLED );
+            }
+        }
+        // Tx 500 kHz channels
+        for( uint8_t i = NUMBER_OF_TX_CHANNEL_AU_915 - 8; i < NUMBER_OF_TX_CHANNEL_AU_915; i++ )
+        {
+            if( i == (( region_sub_band - 1 ) + 64 ))
+            {  
+                SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_ENABLED );
+            }
+            else
+            {
+                SMTC_PUT_BIT8( channel_index_enabled, i, CHANNEL_DISABLED );
+            }
+        }
+
+        memset1( &snapshot_channel_tx_mask[0], 0x00, 8 );
+        memset1( &snapshot_channel_tx_mask[region_sub_band - 1], 0xFF, 1 );
+        memset1( &snapshot_channel_tx_mask[BANK_8_500_AU915], ( 0x01 << ( region_sub_band - 1 )), 1 );
+    }
 
 #if( BSP_DBG_TRACE == BSP_FEATURE_ON )
     SMTC_MODEM_HAL_TRACE_MSG( "Ch 125kHz\n" );

@@ -1356,6 +1356,28 @@ smtc_modem_return_code_t smtc_modem_multicast_class_b_stop_all_sessions( uint8_t
 #endif  // SMTC_MULTICAST
 }
 
+smtc_modem_return_code_t smtc_modem_set_region_sub_band( uint8_t stack_id, uint8_t band )
+{
+    UNUSED( stack_id );
+    RETURN_BUSY_IF_TEST_MODE( );
+
+    smtc_modem_return_code_t return_code = SMTC_MODEM_RC_OK;
+    if( get_join_state( ) != MODEM_NOT_JOINED )
+    {
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call but the device is already join\n", __func__ );
+        return SMTC_MODEM_RC_BUSY;
+    }
+
+    if( set_modem_region_sub_band( band ) == false )
+    {
+        SMTC_MODEM_HAL_TRACE_ERROR( "%s call with region sub-band not valid\n", __func__ );
+        return SMTC_MODEM_RC_INVALID;
+    }
+
+    return return_code;
+}
+
+
 smtc_modem_return_code_t smtc_modem_set_region_duty_cycle( bool status )
 {
     smtc_modem_return_code_t return_code = SMTC_MODEM_RC_OK;

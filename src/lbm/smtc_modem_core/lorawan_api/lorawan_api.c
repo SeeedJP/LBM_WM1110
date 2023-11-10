@@ -826,6 +826,11 @@ status_lorawan_t lorawan_api_get_device_time_req_status( void )
     return lr1_mac_core_get_device_time_req_status( &lr1_mac_obj );
 }
 
+status_lorawan_t lorawan_api_set_region_sub_band( uint8_t band )
+{
+    return lr1mac_core_set_region_sub_band( &lr1_mac_obj, band );
+}
+
 uint32_t lorawan_api_get_toa( uint8_t len )
 {
     lr1_stack_mac_t* lr1_mac = &lr1_mac_obj;
