@@ -605,6 +605,15 @@ status_lorawan_t lr1_mac_core_get_link_check_ans( lr1_stack_mac_t* lr1_mac_obj, 
  */
 status_lorawan_t lr1_mac_core_get_device_time_req_status( lr1_stack_mac_t* lr1_mac_obj );
 
+/*!
+ * @brief
+ *
+ * @param lr1_mac_obj
+ * @param band
+ * @return status_lorawan_t
+ */
+status_lorawan_t lr1mac_core_set_region_sub_band( lr1_stack_mac_t* lr1_mac_obj, uint8_t band );
+
 /**
  * @brief Get Ping Slot Info Request status
  *

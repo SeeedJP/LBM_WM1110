@@ -203,6 +203,15 @@ uint32_t region_us_915_get_rx_beacon_frequency_channel( smtc_real_t* real, uint3
  * @return uint32_t
  */
 uint32_t region_us_915_get_rx_ping_slot_frequency_channel( smtc_real_t* real, uint32_t gps_time_s, uint32_t dev_addr );
+
+/**
+ * @brief Set the region sub-band number
+ *
+ * @param real
+ * @param band
+ */
+status_lorawan_t region_us_915_set_sub_band( smtc_real_t* real, uint8_t band );
+
 #ifdef __cplusplus
 }
 #endif

@@ -875,6 +875,12 @@ status_lorawan_t lorawan_api_get_link_check_ans( uint8_t* margin, uint8_t* gw_cn
 status_lorawan_t lorawan_api_get_device_time_req_status( void );
 
 /*!
+ * \brief Set the LoRaWAN region sub-band parameter
+ * \param [in] 
+ */
+status_lorawan_t lorawan_api_set_region_sub_band( uint8_t band );
+
+/*!
  * \brief Get the LoRaWAN uplink TOA
  * \param [in] 
  */

@@ -1134,6 +1134,20 @@ smtc_modem_return_code_t smtc_modem_multicast_class_b_stop_session( uint8_t     
 smtc_modem_return_code_t smtc_modem_multicast_class_b_stop_all_sessions( uint8_t stack_id );
 
 /**
+ * @brief Set the subband for us915 or au915
+ *
+ * @param [in]  stack_id  
+ *
+ * @param [in]  band  
+ *
+ * @return Modem return code as defined in @ref smtc_modem_return_code_t
+ * @retval SMTC_MODEM_RC_OK                Command executed without errors
+ * @retval SMTC_MODEM_RC_INVALID           \p status is NULL
+ * @retval SMTC_MODEM_RC_BUSY              Modem is currently in test mode
+ * @retval SMTC_MODEM_RC_INVALID_STACK_ID  Invalid \p stack_id
+ */
+smtc_modem_return_code_t smtc_modem_set_region_sub_band( uint8_t stack_id, uint8_t band );
+/**
  * @brief Set the dutycycle enable or disable
  *
  * @param [in]  status  
