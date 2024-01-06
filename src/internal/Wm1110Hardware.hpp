@@ -84,6 +84,7 @@ public:
     void invokeGnssPostscan();
 
     void begin();
+    void enterBootloaderMode();
     void reset();
     void beginTransfer();
     void endTransfer();

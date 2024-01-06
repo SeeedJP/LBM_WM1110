@@ -77,6 +77,30 @@ void Wm1110Hardware::begin()
     radioMode_ = RadioMode::AWAKE;
 }
 
+void Wm1110Hardware::enterBootloaderMode()
+{
+    ss_.write(1);
+
+    reset_.write(0);
+
+    busy_.end();
+    nrf_hal::GpioOutputPin<LR1110_BUSY_PIN, 0> setBusyToLow;
+    setBusyToLow.begin();
+
+    nrf_hal::System::SpinDelayUs(200);
+
+    reset_.write(1);
+
+    nrf_hal::System::delayMs(200);
+
+    setBusyToLow.end();
+    busy_.begin();
+
+    while (busy_.read()) nrf_hal::System::delayMs(1);
+
+    radioMode_ = RadioMode::AWAKE;
+}
+
 void Wm1110Hardware::reset()
 {
     ss_.write(1);
